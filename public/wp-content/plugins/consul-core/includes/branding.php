@@ -14,22 +14,24 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Define Brand Constants
- * Deze zijn standaard Consul Infra kleuren en fonts
- * Per site kunnen deze worden overridden via Customizer
+ * Define Brand Constants - Consul Infra Official Colors
+ * Basis Consul Infra branding, per site aanpasbaar via Customizer
  */
 
-// Primaire Consul Infra kleuren
-const CONSUL_BRAND_PRIMARY = '#004A90';        // Blauw
-const CONSUL_BRAND_SECONDARY = '#FF6B35';     // Oranje
-const CONSUL_BRAND_DARK = '#1A1A1A';          // Donkergrijs
-const CONSUL_BRAND_LIGHT = '#F5F5F5';         // Lichtgrijs
-const CONSUL_BRAND_ACCENT = '#00BCD4';        // Cyaan
+// Primaire Consul Infra kleuren (officieeel)
+const CONSUL_BRAND_PRIMARY = '#004B87';        // Blauw (Consul Infra primair)
+const CONSUL_BRAND_SECONDARY = '#ED7D31';     // Oranje (Consul Infra accent)
+const CONSUL_BRAND_DARK = '#1F1F1F';          // Donkergrijs
+const CONSUL_BRAND_LIGHT = '#F8F8F8';         // Lichtgrijs
+const CONSUL_BRAND_ACCENT = '#70AD47';        // Groen accent
 
 // Typografie
 const CONSUL_FONT_PRIMARY = '"Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif';
 const CONSUL_FONT_HEADING = '"Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif';
-const CONSUL_FONT_MONO = '"Courier New", monospace';
+
+// Assets
+const CONSUL_LOGO_DEFAULT = CONSUL_CORE_ASSETS . 'img/consul-logo.png';
+const CONSUL_FAVICON_DEFAULT = CONSUL_CORE_ASSETS . 'img/favicon.ico';
 
 /**
  * Initialize Customizer Settings
@@ -38,7 +40,7 @@ const CONSUL_FONT_MONO = '"Courier New", monospace';
 function consul_core_customize_register($wp_customize) {
     // Section voor branding
     $wp_customize->add_section('consul_branding', array(
-        'title' => __('Consul Branding', 'consul-core'),
+        'title' => __('Consul Infra Branding', 'consul-core'),
         'priority' => 30,
         'description' => __('Pas de huisstijl aan per site', 'consul-core'),
     ));
@@ -51,7 +53,7 @@ function consul_core_customize_register($wp_customize) {
     ));
     $wp_customize->add_control(
         new WP_Customize_Color_Control($wp_customize, 'consul_color_primary', array(
-            'label' => __('Primaire kleur', 'consul-core'),
+            'label' => __('Primaire kleur (blauw)', 'consul-core'),
             'section' => 'consul_branding',
             'settings' => 'consul_color_primary',
         ))
@@ -65,22 +67,23 @@ function consul_core_customize_register($wp_customize) {
     ));
     $wp_customize->add_control(
         new WP_Customize_Color_Control($wp_customize, 'consul_color_secondary', array(
-            'label' => __('Secundaire kleur', 'consul-core'),
+            'label' => __('Secundaire kleur (oranje)', 'consul-core'),
             'section' => 'consul_branding',
             'settings' => 'consul_color_secondary',
         ))
     );
 
-    // Logo
-    $wp_customize->add_setting('consul_logo_url', array(
-        'default' => '',
-        'sanitize_callback' => 'esc_url_raw',
+    // Accent kleur
+    $wp_customize->add_setting('consul_color_accent', array(
+        'default' => CONSUL_BRAND_ACCENT,
+        'sanitize_callback' => 'sanitize_hex_color',
+        'transport' => 'postMessage',
     ));
     $wp_customize->add_control(
-        new WP_Customize_Image_Control($wp_customize, 'consul_logo_url', array(
-            'label' => __('Logo', 'consul-core'),
-            'section' => 'title_tagline',
-            'settings' => 'consul_logo_url',
+        new WP_Customize_Color_Control($wp_customize, 'consul_color_accent', array(
+            'label' => __('Accent kleur (groen)', 'consul-core'),
+            'section' => 'consul_branding',
+            'settings' => 'consul_color_accent',
         ))
     );
 }
@@ -92,19 +95,21 @@ add_action('customize_register', 'consul_core_customize_register');
 function consul_core_output_css_variables() {
     $color_primary = get_theme_mod('consul_color_primary', CONSUL_BRAND_PRIMARY);
     $color_secondary = get_theme_mod('consul_color_secondary', CONSUL_BRAND_SECONDARY);
+    $color_accent = get_theme_mod('consul_color_accent', CONSUL_BRAND_ACCENT);
     
     // Zorg voor geldige hex kleuren
     $color_primary = sanitize_hex_color($color_primary) ?: CONSUL_BRAND_PRIMARY;
     $color_secondary = sanitize_hex_color($color_secondary) ?: CONSUL_BRAND_SECONDARY;
+    $color_accent = sanitize_hex_color($color_accent) ?: CONSUL_BRAND_ACCENT;
     
     ?>
     <style id="consul-core-css-variables">
         :root {
             --consul-primary: <?php echo esc_attr($color_primary); ?>;
             --consul-secondary: <?php echo esc_attr($color_secondary); ?>;
+            --consul-accent: <?php echo esc_attr($color_accent); ?>;
             --consul-dark: <?php echo esc_attr(CONSUL_BRAND_DARK); ?>;
             --consul-light: <?php echo esc_attr(CONSUL_BRAND_LIGHT); ?>;
-            --consul-accent: <?php echo esc_attr(CONSUL_BRAND_ACCENT); ?>;
             
             --consul-font-primary: <?php echo esc_attr(CONSUL_FONT_PRIMARY); ?>;
             --consul-font-heading: <?php echo esc_attr(CONSUL_FONT_HEADING); ?>;
@@ -116,25 +121,24 @@ add_action('wp_head', 'consul_core_output_css_variables');
 add_action('admin_head', 'consul_core_output_css_variables');
 
 /**
- * Display Logo in Header
+ * Register Favicon
  */
-function consul_core_display_logo() {
-    $logo_url = get_theme_mod('consul_logo_url');
+function consul_core_register_favicon() {
+    $favicon_url = CONSUL_FAVICON_DEFAULT;
     
-    if (!$logo_url) {
-        // Standaard Consul logo
-        $logo_url = CONSUL_CORE_ASSETS . 'img/consul-logo.svg';
+    // Check if favicon exists, if not use default
+    $favicon_path = str_replace(site_url('/'), ABSPATH, $favicon_url);
+    if (!file_exists($favicon_path)) {
+        // Fallback: use PNG logo as favicon fallback
+        $favicon_url = CONSUL_LOGO_DEFAULT;
     }
     
-    if ($logo_url && file_exists(ABSPATH . wp_parse_url($logo_url, PHP_URL_PATH))) {
-        $site_url = get_site_url();
-        ?>
-        <a href="<?php echo esc_url($site_url); ?>" class="site-logo">
-            <img src="<?php echo esc_url($logo_url); ?>" alt="<?php bloginfo('name'); ?>" class="logo-image">
-        </a>
-        <?php
-    }
+    ?>
+    <link rel="icon" type="image/png" href="<?php echo esc_url($favicon_url); ?>" />
+    <link rel="apple-touch-icon" href="<?php echo esc_url($favicon_url); ?>" />
+    <?php
 }
+add_action('wp_head', 'consul_core_register_favicon');
 
 /**
  * Add body class for site branding
@@ -153,10 +157,17 @@ function consul_get_brand_color($type = 'primary') {
     $color_map = array(
         'primary' => get_theme_mod('consul_color_primary', CONSUL_BRAND_PRIMARY),
         'secondary' => get_theme_mod('consul_color_secondary', CONSUL_BRAND_SECONDARY),
+        'accent' => get_theme_mod('consul_color_accent', CONSUL_BRAND_ACCENT),
         'dark' => CONSUL_BRAND_DARK,
         'light' => CONSUL_BRAND_LIGHT,
-        'accent' => CONSUL_BRAND_ACCENT,
     );
     
     return isset($color_map[$type]) ? sanitize_hex_color($color_map[$type]) : '';
+}
+
+/**
+ * Helper function: Get logo URL
+ */
+function consul_get_logo_url() {
+    return CONSUL_LOGO_DEFAULT;
 }
