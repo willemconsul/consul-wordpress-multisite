@@ -14,17 +14,16 @@ define( 'DB_CHARSET', getenv( 'DB_CHARSET' ) ?: 'utf8' );
 define( 'DB_COLLATE', getenv( 'DB_COLLATE' ) ?: '' );
 
 /** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', 'BMJslkLswakXVNFnuNPUnFXDxIwCTfDIvXsERtCyTmDLTazcrzQypFVEPxGsHKxs' );
-define( 'SECURE_AUTH_KEY', 'kanRzQLPHutwRMnFJPRhuzrKTplGNglnKcdDLabbzipfQwcDbHwbbLbxXtdhSyaw' );
-define( 'LOGGED_IN_KEY', 'RQDuypmUSSBQhOPrnSplVeTuocOcyklWQVxDYaEVeIpIHjZwbmQcTBLTLJNzYIyz' );
-define( 'NONCE_KEY', 'nqNqUsfwHJdORpAibHpUhJTqPttpTuklfaiIpXEhGrkcroTTmXWIwyVklBuYLwGx' );
-define( 'AUTH_SALT', 'TfanJBaduqbYqTtJjfAEqpOTaBxdBwreqnffnZYbeoJSvQfuQJEEUWaPsvHNTyku' );
-define( 'SECURE_AUTH_SALT', 'qemJcnRQarSJOgOsEJEazAWsMmtcvKszJtHuimQaMGzdrkBmDeuUnkaKfUgQVgKC' );
-define( 'LOGGED_IN_SALT', 'UkvbWrysrEFgCASWeXcXWgOzWlWrkhrohKJCmtVAzpXbhsBIRrtuxISDbuRiCRIC' );
-define( 'NONCE_SALT', 'VTUxFTAdBBZIuJxeNTOFwrhUbQSwrqIcDpNYWeRDhZhleJKKUpweZVwluxqarMyG' );
+define( 'AUTH_KEY', 'VPWUPkqRcoCVAsWuKyDKBVGKvZazwthbhTzzmuUOaWhfqIJmcBZIrLtGBKkUZznH' );
+define( 'SECURE_AUTH_KEY', 'OGsZwmJnJNRWCMhMSKsTrxFTQVEORDwQOMCVcUdkJJciWQUdVAosMVCwYcyBnqcN' );
+define( 'LOGGED_IN_KEY', 'VMKeBJBoFGWgQxUfqgmXhTihprvZVGZFiJflrUIMaqOSwBthUPTguYDjuSCTpVgK' );
+define( 'NONCE_KEY', 'xHPqUrRKAHAYVfpqZXQiSDBDLGkOcavTHQWbcUIHWuULzBPzujeWTFnWnIbSOjCv' );
+define( 'AUTH_SALT', 'pFKOupjdgvbsBwAeChGmmKOtLGxzRViktSsmtyBtUdqLGadUvTyrIgcrgJITcTcG' );
+define( 'SECURE_AUTH_SALT', 'xndEPvsEzHDoenmyjKwuMXseHQHRPCoFklxATBLVEDIyawxCoMDkjHzwTgpFQoBi' );
+define( 'LOGGED_IN_SALT', 'uWtFPxgaVJGYTrLckslAEUbjyVFpYhmlmfJhDszcjmvoMOEdDZbAIsCRvNYVYPZJ' );
+define( 'NONCE_SALT', 'TAbRGDIRbKweJrlFnWEGBiphytMfDuGLNgPtkZYQfjaXvbqWfrywrIZHwIsvCRDf' );
 
 /* Add any custom values between this line and the "stop editing" line. */
-
 
 
 define( 'WP_ALLOW_MULTISITE', 'true' );
@@ -34,6 +33,7 @@ define( 'DOMAIN_CURRENT_SITE', 'consul-wp-ms.ddev.site' );
 define( 'PATH_CURRENT_SITE', '/' );
 define( 'SITE_ID_CURRENT_SITE', '1' );
 define( 'BLOG_ID_CURRENT_SITE', '1' );
+
 /* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */

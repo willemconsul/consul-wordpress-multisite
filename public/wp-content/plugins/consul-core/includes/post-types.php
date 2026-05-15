@@ -8,4 +8,3 @@ if (!defined("ABSPATH")) { exit; }
 
 // Placeholder voor custom post types
 // Te implementeren in Phase 3
-

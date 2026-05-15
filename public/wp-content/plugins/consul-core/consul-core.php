@@ -2,12 +2,11 @@
 /**
  * Plugin Name: Consul Core
  * Plugin URI: https://consulinfra.nl
- * Description: Core plugin voor Consul Infra branding en functionalieit op alle sites
+ * Description: Core plugin voor Consul Infra branding en styling voor de hoofdsite
  * Version: 1.0.0
  * Author: Consul Infra
  * Author URI: https://consulinfra.nl
  * License: GPL v2 or later
- * Network: true
  * Domain Path: /languages
  * Text Domain: consul-core
  */

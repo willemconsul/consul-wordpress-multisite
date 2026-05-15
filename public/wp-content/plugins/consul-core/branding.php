@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (!defined('ABSPATH')) exit;
 define('CONSUL_PRIMARY_COLOR', '#192548');
 define('CONSUL_ACCENT_COLOR', '#da0f22');
