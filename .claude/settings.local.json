@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ddev config *)",
+      "PowerShell(ddev stop --unlist consul-wordpress-multisite)"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+# DDEV
+.ddev/.global_commands
+.ddev/.homeadditions
+.ddev/.importdb*
+
+# WordPress uploads en cache
+public/wp-content/uploads/
+public/wp-content/cache/
+public/wp-content/upgrade/
+public/wp-content/backups/
+public/wp-content/ai1wm-backups/
+
+# Database en backups
+*.sql
+*.sql.gz
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules en vendor
+node_modules/
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Generated docs
+docs/beheer/generated/
