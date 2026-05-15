@@ -15,7 +15,7 @@ Dit is de WordPress Multisite setup voor de drie websites:
 ## Admin inloggen
 
 Gebruikersnaam: admin
-Wachtwoord: admin
+Wachtwoord: ***
 
 ## Documentatie
 
@@ -25,5 +25,5 @@ Zie de `docs/` map voor handleidingen.
 
 1. Zorg dat DDEV draait: `ddev start`
 2. Ga naar https://consul-wp-ms.ddev.site
-3. Log in met admin/admin
+3. Log in met admin/***
 4. Ga naar My Sites > Network Admin
