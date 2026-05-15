@@ -2,62 +2,39 @@
 /**
  * Plugin Name: Consul Core
  * Plugin URI: https://consulinfra.nl
- * Description: Gedeelde core plugin voor Consul Infra Multisite. Bevat branding, ACF setup, custom post types, en herbruikbare blokken.
+ * Description: Core plugin voor Consul Infra branding en functionalieit op alle sites
  * Version: 1.0.0
  * Author: Consul Infra
  * Author URI: https://consulinfra.nl
- * License: GPL-2.0+
- * Text Domain: consul-core
- * Domain Path: /languages
- * Requires at least: 6.0
- * Requires PHP: 8.2
+ * License: GPL v2 or later
  * Network: true
+ * Domain Path: /languages
+ * Text Domain: consul-core
  */
 
-// Prevent direct access
+// Voorkomen dat het bestand direct wordt uitgevoerd
 if (!defined('ABSPATH')) {
-    exit('No direct access allowed.');
+    exit;
 }
 
-// Define plugin constants
-define('CONSUL_CORE_VERSION', '1.0.0');
-define('CONSUL_CORE_DIR', plugin_dir_path(__FILE__));
+// Plugin constanten
+define('CONSUL_CORE_PATH', plugin_dir_path(__FILE__));
 define('CONSUL_CORE_URL', plugin_dir_url(__FILE__));
-define('CONSUL_CORE_ASSETS', CONSUL_CORE_URL . 'assets/');
 
-/**
- * Load plugin includes
- */
-function consul_core_load_includes() {
-    require_once CONSUL_CORE_DIR . 'includes/branding.php';
-    require_once CONSUL_CORE_DIR . 'includes/post-types.php';
-    require_once CONSUL_CORE_DIR . 'includes/taxonomies.php';
-    require_once CONSUL_CORE_DIR . 'includes/acf-setup.php';
-}
-add_action('plugins_loaded', 'consul_core_load_includes');
+// Includes
+require_once CONSUL_CORE_PATH . 'includes/branding.php';
+require_once CONSUL_CORE_PATH . 'includes/post-types.php';
+require_once CONSUL_CORE_PATH . 'includes/taxonomies.php';
+require_once CONSUL_CORE_PATH . 'includes/acf-setup.php';
 
-/**
- * Enqueue styles
- */
-function consul_core_enqueue_styles() {
-    wp_enqueue_style(
-        'consul-core-branding',
-        CONSUL_CORE_ASSETS . 'css/branding.css',
-        [],
-        CONSUL_CORE_VERSION
-    );
-}
-add_action('wp_enqueue_scripts', 'consul_core_enqueue_styles');
-add_action('admin_enqueue_scripts', 'consul_core_enqueue_styles');
-
-// Activation hook
+// Hook voor plugin activatie
 register_activation_hook(__FILE__, 'consul_core_activate');
 function consul_core_activate() {
-    // Future: any activation tasks
+    // Placeholder voor activatie-logica
 }
 
-// Deactivation hook
+// Hook voor plugin deactivatie
 register_deactivation_hook(__FILE__, 'consul_core_deactivate');
 function consul_core_deactivate() {
-    // Future: any cleanup tasks
+    // Placeholder voor deactivatie-logica
 }

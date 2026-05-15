@@ -1,14 +1,11 @@
 ﻿<?php
 /**
- * Consul Core - Custom Taxonomies
+ * Custom Taxonomies - Consul Core
+ * Stub voor Phase 3
  */
 
-if (!defined('ABSPATH')) {
-    exit('No direct access allowed.');
-}
+if (!defined("ABSPATH")) { exit; }
 
-function consul_core_register_taxonomies() {
-    // Taxonomies worden per site geregistreerd in Phase 3
-    do_action('consul_core_register_taxonomies');
-}
-add_action('init', 'consul_core_register_taxonomies');
+// Placeholder voor custom taxonomies
+// Te implementeren in Phase 3
+
